@@ -16,19 +16,40 @@ resource "azurerm_key_vault" "this" {
 }
 
 # Get current user/client
-data "azurerm_client_config" "current" {}
+# data "azurerm_client_config" "current" {}
 
-# Access policy defined OUTSIDE the key vault resource
-resource "azurerm_key_vault_access_policy" "current_user" {
+# # Access policy defined OUTSIDE the key vault resource
+# resource "azurerm_key_vault_access_policy" "current_user" {
+#   key_vault_id = azurerm_key_vault.this.id
+
+#   tenant_id = data.azurerm_client_config.current.tenant_id
+#   object_id = data.azurerm_client_config.current.object_id
+#   key_permissions = [
+#     "Get", "List"
+#   ]
+
+#   secret_permissions = [
+#     "Backup", "Delete", "Get", "List", "Purge", "Recover", "Restore", "Set"
+#   ]
+# }
+
+
+data "azuread_user" "user" {
+  user_principal_name = "bandari_shashank@epam.com"
+}
+
+
+resource "azurerm_key_vault_access_policy" "bandari_user" {
   key_vault_id = azurerm_key_vault.this.id
 
   tenant_id = data.azurerm_client_config.current.tenant_id
-  object_id = data.azurerm_client_config.current.object_id
-  key_permissions = [
-    "Get", "List"
-  ]
+  object_id = data.azuread_user.user.object_id
+
+  key_permissions = ["Get", "List"]
 
   secret_permissions = [
-    "Backup", "Delete", "Get", "List", "Purge", "Recover", "Restore", "Set"
+    "Get",
+    "List",
+    "Set"
   ]
 }
