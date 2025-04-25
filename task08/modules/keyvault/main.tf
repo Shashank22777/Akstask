@@ -16,7 +16,7 @@ resource "azurerm_key_vault" "this" {
 }
 
 # Get current user/client
-# data "azurerm_client_config" "current" {}
+data "azurerm_client_config" "current" {}
 
 # # Access policy defined OUTSIDE the key vault resource
 # resource "azurerm_key_vault_access_policy" "current_user" {
