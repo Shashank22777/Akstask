@@ -25,3 +25,9 @@ variable "key_vault_name" {
   description = "value"
   type        = string
 }
+
+variable "git_pat" {
+  description = "value"
+  type        = string
+  sensitive   = true
+}
