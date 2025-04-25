@@ -19,19 +19,19 @@ resource "azurerm_key_vault" "this" {
 data "azurerm_client_config" "current" {}
 
 # Access policy defined OUTSIDE the key vault resource
-resource "azurerm_key_vault_access_policy" "current_user" {
-  key_vault_id = azurerm_key_vault.this.id
+# resource "azurerm_key_vault_access_policy" "current_user" {
+#   key_vault_id = azurerm_key_vault.this.id
 
-  tenant_id = data.azurerm_client_config.current.tenant_id
-  object_id = "f1827233-21c0-4efc-815d-f6b8083897b9"
-  key_permissions = [
-    "Get", "List"
-  ]
+#   tenant_id = data.azurerm_client_config.current.tenant_id
+#   object_id = "f1827233-21c0-4efc-815d-f6b8083897b9"
+#   key_permissions = [
+#     "Get", "List"
+#   ]
 
-  secret_permissions = [
-    "Backup", "Delete", "Get", "List", "Purge", "Recover", "Restore", "Set"
-  ]
-}
+#   secret_permissions = [
+#     "Backup", "Delete", "Get", "List", "Purge", "Recover", "Restore", "Set"
+#   ]
+# }
 
 
 # data "azuread_user" "user" {
