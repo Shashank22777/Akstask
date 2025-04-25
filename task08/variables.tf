@@ -29,7 +29,7 @@ variable "key_vault_name" {
 
 variable "key_vault_id" {
   description = "value"
-  type = string
+  type        = string
 }
 
 variable "git_pat" {

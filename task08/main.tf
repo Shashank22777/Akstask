@@ -32,14 +32,14 @@ provider "kubernetes" {
 
 
 resource "kubectl_manifest" "deployment" {
-  
-  yaml_body        = data.template_file.deployment.rendered
-  depends_on =  [module.aks]
+
+  yaml_body  = data.template_file.deployment.rendered
+  depends_on = [module.aks]
 
 }
 
 resource "kubectl_manifest" "secret_provider" {
-  yaml_body = data.template_file.secret_provider.rendered
+  yaml_body  = data.template_file.secret_provider.rendered
   depends_on = [kubectl_manifest.secret_provider, module.acr]
 }
 
@@ -53,7 +53,7 @@ resource "kubectl_manifest" "service" {
   #     value_type = "regex"
   #   }
   # }
-    depends_on = [kubectl_manifest.deployment]
+  depends_on = [kubectl_manifest.deployment]
 }
 
 resource "azurerm_resource_group" "rg" {
@@ -69,11 +69,11 @@ module "aci" {
   source               = "./modules/aci"
   container_group_name = local.aci_name
   # key_vault_id         = module.keyvault.id
-  dns_name_label       = local.aci_name
-  location             = var.location
-  redis_hostname    =  azurerm_key_vault_secret.redis_hostname.value
-  redis_primary_key =  azurerm_key_vault_secret.redis_primary_key.value
-  resource_group_name  = azurerm_resource_group.rg.name
+  dns_name_label      = local.aci_name
+  location            = var.location
+  redis_hostname      = azurerm_key_vault_secret.redis_hostname.value
+  redis_primary_key   = azurerm_key_vault_secret.redis_primary_key.value
+  resource_group_name = azurerm_resource_group.rg.name
   tags = {
     tag = "Azure Container Instance"
   }

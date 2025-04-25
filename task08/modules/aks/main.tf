@@ -5,14 +5,14 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
   dns_prefix          = var.dns_prefix
 
   default_node_pool {
-    name         = "system"
-    node_count   = var.node_count
-    vm_size      = var.vm_size
+    name       = "system"
+    node_count = var.node_count
+    vm_size    = var.vm_size
     # os_disk_type = "Ephemeral"
   }
 
   identity {
-    type = "UserAssigned"
+    type         = "UserAssigned"
     identity_ids = [azurerm_user_assigned_identity.example.id]
   }
 
@@ -37,9 +37,9 @@ resource "azurerm_user_assigned_identity" "example" {
 
 # Role assignment: Allow AKS to pull from ACR
 resource "azurerm_role_assignment" "aks_acr_pull" {
-  scope                = var.acr_id
-  role_definition_name = "AcrPull"
-  principal_id         = azurerm_user_assigned_identity.example.principal_id
+  scope                            = var.acr_id
+  role_definition_name             = "AcrPull"
+  principal_id                     = azurerm_user_assigned_identity.example.principal_id
   skip_service_principal_aad_check = true
 }
 
@@ -63,8 +63,8 @@ resource "azurerm_role_assignment" "aks_acr_pull" {
 data "azurerm_client_config" "current" {}
 
 resource "azurerm_role_assignment" "key_vault_secret" {
-  principal_id  = azurerm_kubernetes_cluster.aks_cluster.kubelet_identity[0].object_id
-  role_definition_name = "Key Vault Secrets User"
-  scope = var.key_vault_id
+  principal_id                     = azurerm_kubernetes_cluster.aks_cluster.kubelet_identity[0].object_id
+  role_definition_name             = "Key Vault Secrets User"
+  scope                            = var.key_vault_id
   skip_service_principal_aad_check = true
 }
