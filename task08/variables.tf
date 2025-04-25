@@ -25,15 +25,3 @@ variable "key_vault_name" {
   description = "value"
   type        = string
 }
-
-
-variable "key_vault_id" {
-  description = "value"
-  type        = string
-}
-
-variable "git_pat" {
-  description = "Git Personal Access Token"
-  type        = string
-  sensitive   = true
-}
